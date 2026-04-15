@@ -3,7 +3,9 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
+  basePath: '/slikk',
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
