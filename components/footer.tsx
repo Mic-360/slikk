@@ -7,7 +7,6 @@ import {
   IconBrandFacebook,
   IconBrandGooglePlay,
   IconBrandInstagram,
-  IconBrandX,
 } from '@tabler/icons-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -79,7 +78,7 @@ const Footer: FC = () => {
               className='inline-block transition-opacity hover:opacity-80'
             >
               <Image
-                src='/logo.png'
+                src='/slikk/logo.png'
                 alt='Slikk logo'
                 width={200}
                 height={200}

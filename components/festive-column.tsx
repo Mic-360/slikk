@@ -20,7 +20,7 @@ const FestiveColumn: FC = () => {
           className='relative isolate overflow-hidden rounded-[32px] md:rounded-[40px] bg-[#1a0b08]'
         >
           <Image
-            src='/festive.png'
+            src='/slikk/festive.png'
             alt='Festive edit'
             width={2400}
             height={1000}

@@ -55,54 +55,54 @@ export const NAVIGATION = {
 };
 
 export const CATALOGUE_ITEMS = [
-  {
-	id: 1,
-	name: 'MOKOBARA',
-	image:
-	  'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/product/1de040b4d8e846028ee783c0c57af51d_Mokabora%20(1).png',
-	link: 'https://www.slikk.club/products?banner_id=5943&namex=MOKOBARA',
-	color: 'bg-[#FDF8F4]',
-  },
-  {
-	id: 2,
-	name: 'The Indian Garage Co',
-	image:
-	  'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/product/aa30258be83d4ec899a3aaf12d4cbe5f_the%20indian%20garage%20co.webp',
-	link: 'https://www.slikk.club/products?banner_id=5856&namex=The%20Indian%20Garage%20Co',
-	color: 'bg-[#F2F4F7]',
-  },
-  {
-	id: 3,
-	name: 'The Souled Store',
-	image:
-	  'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/product/570b00efe6ab4838ac76bb1c5edf0eb7_souled_store.webp',
-	link: 'https://www.slikk.club/products?banner_id=4883&namex=The%20Souled%20Store',
-	color: 'bg-[#FFF9F9]',
-  },
-  {
-	id: 4,
-	name: 'Bauge',
-	image:
-	  'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/other/3eed69d30d5341309719f6a0f51d063b_BaugeBagsy.png',
-	link: 'https://www.slikk.club/products?banner_id=5386&namex=Bauge',
-	color: 'bg-[#F8F9FF]',
-  },
-  {
-	id: 5,
-	name: 'Soch',
-	image:
-	  'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/other/2ad35585ff224786a235eab54290d2ef_soch-1.png',
-	link: 'https://www.slikk.club/products?banner_id=5904&namex=Soch',
-	color: 'bg-[#FFF5F5]',
-  },
-  {
-	id: 6,
-	name: 'Backpacks',
-	image:
-	  'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/product/d7a653cf9e5946f4aa015403aaf2c56e_Gear%20Wesley%20FGear%20Square%20(1).webp',
-	link: 'https://www.slikk.club/products?banner_id=5828&namex=Backpacks',
-	color: 'bg-[#F5FBF5]',
-  },
+	{
+		id: 1,
+		name: 'MOKOBARA',
+		image:
+			'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/product/1de040b4d8e846028ee783c0c57af51d_Mokabora%20(1).png',
+		link: 'https://www.slikk.club/products?banner_id=5943&namex=MOKOBARA',
+		color: 'bg-[#FDF8F4]',
+	},
+	{
+		id: 2,
+		name: 'The Indian Garage Co',
+		image:
+			'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/product/aa30258be83d4ec899a3aaf12d4cbe5f_the%20indian%20garage%20co.webp',
+		link: 'https://www.slikk.club/products?banner_id=5856&namex=The%20Indian%20Garage%20Co',
+		color: 'bg-[#F2F4F7]',
+	},
+	{
+		id: 3,
+		name: 'The Souled Store',
+		image:
+			'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/product/570b00efe6ab4838ac76bb1c5edf0eb7_souled_store.webp',
+		link: 'https://www.slikk.club/products?banner_id=4883&namex=The%20Souled%20Store',
+		color: 'bg-[#FFF9F9]',
+	},
+	{
+		id: 4,
+		name: 'Bauge',
+		image:
+			'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/other/3eed69d30d5341309719f6a0f51d063b_BaugeBagsy.png',
+		link: 'https://www.slikk.club/products?banner_id=5386&namex=Bauge',
+		color: 'bg-[#F8F9FF]',
+	},
+	{
+		id: 5,
+		name: 'Soch',
+		image:
+			'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/other/2ad35585ff224786a235eab54290d2ef_soch-1.png',
+		link: 'https://www.slikk.club/products?banner_id=5904&namex=Soch',
+		color: 'bg-[#FFF5F5]',
+	},
+	{
+		id: 6,
+		name: 'Backpacks',
+		image:
+			'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/product/d7a653cf9e5946f4aa015403aaf2c56e_Gear%20Wesley%20FGear%20Square%20(1).webp',
+		link: 'https://www.slikk.club/products?banner_id=5828&namex=Backpacks',
+		color: 'bg-[#F5FBF5]',
+	},
 ];
 
 export const FESTIVE_ITEMS = [
@@ -137,21 +137,21 @@ export const FESTIVE_ITEMS = [
 ];
 
 export type CuratedItem = {
-  id: number;
-  name: string;
-  image: string;
-  href: string;
+	id: number;
+	name: string;
+	image: string;
+	href: string;
 };
 
 export type CuratedTrack = {
-  id: string;
-  badge: string;
-  title: string;
-  subtitle: string;
-  heroImage: string;
-  heroAlt: string;
-  ctaHref: string;
-  items: CuratedItem[];
+	id: string;
+	badge: string;
+	title: string;
+	subtitle: string;
+	heroImage: string;
+	heroAlt: string;
+	ctaHref: string;
+	items: CuratedItem[];
 };
 
 export const CURATED_TRACKS: CuratedTrack[] = [
@@ -162,7 +162,7 @@ export const CURATED_TRACKS: CuratedTrack[] = [
 		subtitle:
 			'Everything from elevated everyday fits to statement accessories.',
 		heroImage:
-			'/her.png',
+			'/slikk/her.png',
 		heroAlt: 'Curated women fashion banner',
 		ctaHref: '/products?banner_id=3931&namex=Tops',
 		items: [
@@ -230,7 +230,7 @@ export const CURATED_TRACKS: CuratedTrack[] = [
 		title: 'The Curated — His Edit',
 		subtitle: 'Clean staples, occasion picks, and travel-ready essentials.',
 		heroImage:
-			'/him.png',
+			'/slikk/him.png',
 		heroAlt: 'Curated men fashion banner',
 		ctaHref: 'https://www.slikk.club/products?banner_id=3924&namex=Shirts',
 		items: [
@@ -318,7 +318,7 @@ export const COLLECTIONS: CollectionTrack[] = [
 		name: 'Bags',
 		tagline: 'Carry-everywhere styles with everyday swagger.',
 		heroImage:
-			'/bags.png',
+			'/slikk/bags.png',
 		heroAlt: 'Bags collection hero',
 		accentGradientClass: 'from-indigo-400/45 via-sky-300/20 to-transparent',
 		badgeClass:
@@ -373,7 +373,7 @@ export const COLLECTIONS: CollectionTrack[] = [
 		name: 'Jewellery',
 		tagline: 'Tiny sparkles, major main-character moments.',
 		heroImage:
-			'/jewellry.png',
+			'/slikk/jewellry.png',
 		heroAlt: 'Jewellery collection hero',
 		accentGradientClass: 'from-fuchsia-400/45 via-pink-300/20 to-transparent',
 		badgeClass:
@@ -428,7 +428,7 @@ export const COLLECTIONS: CollectionTrack[] = [
 		name: 'Home',
 		tagline: 'Mood-setting corners for every room in your story.',
 		heroImage:
-			'/home.png',
+			'/slikk/home.png',
 		heroAlt: 'Home collection hero',
 		accentGradientClass: 'from-emerald-400/45 via-lime-300/20 to-transparent',
 		badgeClass:
@@ -504,7 +504,7 @@ export const COLLECTIONS: CollectionTrack[] = [
 		name: 'Beauty',
 		tagline: 'Glow kits, glam picks, and mirror-ready finishes.',
 		heroImage:
-			'/beauty.png',
+			'/slikk/beauty.png',
 		heroAlt: 'Beauty collection hero',
 		accentGradientClass: 'from-rose-400/45 via-orange-300/20 to-transparent',
 		badgeClass:

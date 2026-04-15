@@ -54,7 +54,7 @@ const TILES: Tile[] = [
   {
     name: 'Footwear',
     href: '/products?category=footwear',
-    image: '/header/footwear.png',
+    image: '/slikk/header/footwear.png',
     kicker: 'Edit 04',
     count: '156 styles',
     tint: 'bg-ink text-ivory',
@@ -64,7 +64,7 @@ const TILES: Tile[] = [
   {
     name: 'Jewellery',
     href: '/products?category=jewellery',
-    image: '/header/jewellery.webp',
+    image: '/slikk/header/jewellery.webp',
     kicker: 'Edit 05',
     count: '94 pieces',
     tint: 'bg-[#e6e0d4]',
@@ -73,7 +73,7 @@ const TILES: Tile[] = [
   {
     name: 'Beauty',
     href: '/products?category=beauty',
-    image: '/header/beauty.png',
+    image: '/slikk/header/beauty.png',
     kicker: 'Edit 06',
     count: '228 products',
     tint: 'bg-[#f2ecd9]',
@@ -93,7 +93,11 @@ const TileCard: FC<{ tile: Tile; index: number }> = ({ tile, index }) => (
       tile.area,
     )}
   >
-    <Link href={tile.href} className='absolute inset-0 z-30' aria-label={tile.name} />
+    <Link
+      href={tile.href}
+      className='absolute inset-0 z-30'
+      aria-label={tile.name}
+    />
     <div className='absolute inset-0'>
       <Image
         src={tile.image}
@@ -144,7 +148,10 @@ const TileCard: FC<{ tile: Tile; index: number }> = ({ tile, index }) => (
 
 const Categories: FC = () => {
   return (
-    <section id='categories' className='relative py-16 md:py-28 bg-background scroll-mt-24'>
+    <section
+      id='categories'
+      className='relative py-16 md:py-28 bg-background scroll-mt-24'
+    >
       <div className='max-w-360 mx-auto px-5 md:px-10'>
         <div className='flex flex-wrap items-end justify-between gap-6 mb-10 md:mb-14'>
           <div className='max-w-2xl'>
@@ -164,7 +171,11 @@ const Categories: FC = () => {
 
         <div className='grid grid-cols-1 md:grid-cols-12 md:auto-rows-[240px] lg:auto-rows-[280px] gap-4'>
           {TILES.map((tile, i) => (
-            <TileCard key={tile.name} tile={tile} index={i} />
+            <TileCard
+              key={tile.name}
+              tile={tile}
+              index={i}
+            />
           ))}
         </div>
       </div>

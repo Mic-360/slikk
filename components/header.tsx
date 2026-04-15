@@ -106,9 +106,7 @@ const Header: FC = () => {
                   size={14}
                   stroke={1.6}
                 />
-                <span className='font-medium text-foreground'>
-                  Bengaluru
-                </span>
+                <span className='font-medium text-foreground'>Bengaluru</span>
                 <span className='text-muted-foreground/80'>·</span>
                 <span className='tabular-nums'>58 min</span>
               </button>
@@ -119,7 +117,7 @@ const Header: FC = () => {
               className='inline-block transition-opacity hover:opacity-80'
             >
               <Image
-                src='/logo.png'
+                src='/slikk/logo.png'
                 alt='Slikk logo'
                 width={100}
                 height={100}
