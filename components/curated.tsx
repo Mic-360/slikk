@@ -1,202 +1,141 @@
 'use client';
 
-import { buttonVariants } from '@/components/ui/button';
-import type { CuratedItem, CuratedTrack } from '@/lib/const';
+import type { CuratedTrack } from '@/lib/const';
 import { CURATED_TRACKS } from '@/lib/const';
 import { cn } from '@/lib/utils';
-import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
+import { IconArrowUpRight, IconChevronRight } from '@tabler/icons-react';
+import { motion } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useRef, useState, type FC } from 'react';
+import type { FC } from 'react';
 
-const CuratedTrackPanel: FC<{ track: CuratedTrack }> = ({ track }) => {
-  const panelRef = useRef<HTMLElement | null>(null);
-  const [isHovered, setIsHovered] = useState(false);
-  const [isInView, setIsInView] = useState(false);
-  const [supportsHover, setSupportsHover] = useState(false);
-  const scrollAreaRef = useRef<HTMLDivElement | null>(null);
-  const [isMdUp, setIsMdUp] = useState(false);
+const EASE = [0.22, 1, 0.36, 1] as const;
 
-  useEffect(() => {
-    const hoverMedia = window.matchMedia('(hover: hover) and (pointer: fine)');
-    const mdMedia = window.matchMedia('(min-width: 768px)');
-    const sync = () => {
-      setSupportsHover(hoverMedia.matches);
-      setIsMdUp(mdMedia.matches);
-    };
-
-    sync();
-    hoverMedia.addEventListener('change', sync);
-    mdMedia.addEventListener('change', sync);
-
-    return () => {
-      hoverMedia.removeEventListener('change', sync);
-      mdMedia.removeEventListener('change', sync);
-    };
-  }, []);
-
-  useEffect(() => {
-    const node = panelRef.current;
-    if (!node) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsInView(entry.isIntersecting),
-      {
-        threshold: 0.45,
-      },
-    );
-
-    observer.observe(node);
-
-    return () => observer.disconnect();
-  }, []);
-
-  const shouldSpread = supportsHover ? isHovered : isInView;
-  const cardWidth = isMdUp ? 208 : 144;
-  const spreadStep = isMdUp ? 244 : 172;
-  const spreadWidth = cardWidth + spreadStep * (track.items.length - 1);
-
-  const scrollMiniCards = (direction: 'left' | 'right') => {
-    const node = scrollAreaRef.current;
-    if (!node) return;
-
-    const amount = Math.max(cardWidth + 24, spreadStep * 0.72);
-    node.scrollBy({
-      left: direction === 'left' ? -amount : amount,
-      behavior: 'smooth',
-    });
-  };
-
-  const getStackedTransform = (index: number) => {
-    const x = -(index % 2) * 3;
-    const y = 0;
-    const rotate = 0;
-
-    return `translate(${x}px, ${y}px) rotate(${rotate}deg)`;
-  };
-
-  const getSpreadTransform = (index: number) => {
-    const x = -index * spreadStep;
-    const y = 0;
-    const rotate = 0;
-
-    return `translate(${x}px, ${y}px) rotate(${rotate}deg)`;
-  };
-
-  const renderMiniCard = (item: CuratedItem, linkClassName?: string) => {
-    return (
-      <Link
-        href={item.href}
-        className={cn('group/item block', linkClassName)}
-      >
-        <div className='relative aspect-4/5 overflow-hidden rounded-2xl border border-white/30 bg-black/20 backdrop-blur-[2px] transition-[box-shadow,transform] duration-500 group-hover/item:-translate-y-1'>
-          <Image
-            src={item.image}
-            alt={item.name}
-            fill
-            className='object-center transition-transform duration-500 ease-out group-hover/item:scale-110'
-            sizes='(min-width: 768px) 208px, 144px'
-          />
-          <div className='absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-transparent' />
-        </div>
-      </Link>
-    );
-  };
+const CuratedFeature: FC<{ track: CuratedTrack; index: number }> = ({
+  track,
+  index,
+}) => {
+  const anchor =
+    track.id === 'for-her' ? 'curated-for-her' : 'curated-for-him';
+  const isReversed = index % 2 === 1;
 
   return (
     <article
-      ref={panelRef}
-      id={`curated-${track.id}`}
-      className='group relative isolate min-h-117.5 overflow-hidden scroll-mt-24'
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      id={anchor}
+      className='relative scroll-mt-28 py-12 md:py-20'
     >
-      <div className='absolute inset-0'>
-        <Image
-          src={track.heroImage}
-          alt={track.heroAlt}
-          fill
-          className='object-center'
-          sizes='100vw'
-          priority={track.id === 'for-her'}
-        />
-      </div>
-
-      <div className='relative z-20 flex h-full w-full flex-col justify-between p-5 md:p-8 lg:p-10'>
-        <div className='flex max-w-2xl items-center gap-3 md:gap-4'>
-          <p
-            className={cn(
-              'text-[10px] font-black uppercase tracking-[0.18em] text-white/70 transition-opacity duration-500 md:text-xs',
-              shouldSpread ? 'opacity-100' : 'opacity-0 md:opacity-100',
-            )}
-          >
-            {supportsHover
-              ? 'Hover to reveal curated categories'
-              : 'Auto-spread on scroll'}
-          </p>
-        </div>
-      </div>
-
-      <div className='absolute inset-x-0 bottom-4 z-30 px-3 md:px-10'>
-        <div className='relative'>
-          {shouldSpread && (
-            <>
-              <button
-                type='button'
-                aria-label='Scroll curated cards left'
-                onClick={() => scrollMiniCards('left')}
-                className={cn(
-                  buttonVariants({ variant: 'outline', size: 'icon-sm' }),
-                  'absolute top-1/2 left-1 z-20 -translate-y-1/2 border-white/50 bg-black/55 text-white backdrop-blur-sm hover:bg-white hover:text-black md:size-10',
-                )}
-              >
-                <IconChevronLeft data-icon='inline-start' />
-              </button>
-
-              <button
-                type='button'
-                aria-label='Scroll curated cards right'
-                onClick={() => scrollMiniCards('right')}
-                className={cn(
-                  buttonVariants({ variant: 'outline', size: 'icon-sm' }),
-                  'absolute top-1/2 right-1 z-20 -translate-y-1/2 border-white/50 bg-black/55 text-white backdrop-blur-sm hover:bg-white hover:text-black md:size-10',
-                )}
-              >
-                <IconChevronRight data-icon='inline-end' />
-              </button>
-            </>
+      <div className={cn('grid md:grid-cols-12 gap-8 md:gap-10 items-center')}>
+        {/* Hero media */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.9, ease: EASE }}
+          className={cn(
+            'md:col-span-7 relative aspect-4/5 md:aspect-5/6 rounded-[28px] md:rounded-[36px] overflow-hidden isolate bg-secondary',
+            isReversed ? 'md:order-2' : 'md:order-1',
           )}
-
+        >
+          <Image
+            src={track.heroImage}
+            alt={track.heroAlt}
+            fill
+            sizes='(min-width: 768px) 58vw, 100vw'
+            className='object-cover'
+          />
           <div
-            ref={scrollAreaRef}
-            className={cn(
-              'no-scrollbar ml-auto max-w-full overflow-y-hidden touch-pan-x scroll-smooth',
-              shouldSpread ? 'overflow-x-auto' : 'overflow-x-hidden',
-            )}
-          >
-            <div
-              className='relative ml-auto h-50 w-36 md:h-72 md:w-52'
-              style={shouldSpread ? { width: `${spreadWidth}px` } : undefined}
-            >
-              {track.items.map((item, index) => (
-                <div
-                  key={item.id}
-                  className='absolute right-0 bottom-0 w-36 transition-[transform] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] md:w-52'
-                  style={{
-                    transform: shouldSpread
-                      ? getSpreadTransform(index)
-                      : getStackedTransform(index),
-                    zIndex: shouldSpread
-                      ? track.items.length - index
-                      : index + 1,
-                  }}
-                >
-                  {renderMiniCard(item)}
-                </div>
-              ))}
-            </div>
+            aria-hidden
+            className='absolute inset-0 bg-linear-to-t from-ink/30 via-transparent to-transparent'
+          />
+          <div className='absolute top-6 left-6 flex items-center gap-2'>
+            <span className='h-7 px-3 rounded-full glass border border-white/40 text-[10.5px] tracking-micro uppercase inline-flex items-center text-ink backdrop-blur-2xl'>
+              {track.badge}
+            </span>
+            <span className='h-7 px-3 rounded-full bg-ink text-ivory text-[10.5px] tracking-micro uppercase inline-flex items-center backdrop-blur-2xl'>
+              Volume {String(index + 1).padStart(2, '0')}
+            </span>
           </div>
-        </div>
+        </motion.div>
+
+        {/* Editorial column */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.9, ease: EASE, delay: 0.1 }}
+          className={cn(
+            'md:col-span-5',
+            isReversed ? 'md:order-1' : 'md:order-2',
+          )}
+        >
+          <div className='text-[11px] tracking-micro uppercase text-muted-foreground mb-5'>
+            {track.badge}
+          </div>
+          <h3 className='font-display text-5xl md:text-6xl lg:text-7xl leading-[0.92] tracking-display text-ink'>
+            {track.title.split(' — ')[1] ?? track.title}
+          </h3>
+          <p className='mt-6 text-[15.5px] leading-[1.55] text-muted-foreground max-w-md'>
+            {track.subtitle}
+          </p>
+
+          <div className='mt-8 flex items-center gap-3'>
+            <Link
+              href={track.ctaHref}
+              className='h-11 px-5 rounded-full bg-ink text-ivory inline-flex items-center gap-2 text-[13.5px] font-medium hover:bg-ink/90 transition group'
+            >
+              Explore the edit
+              <IconArrowUpRight
+                size={14}
+                stroke={1.8}
+                className='transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
+              />
+            </Link>
+            <Link
+              href={track.ctaHref}
+              className='text-[13.5px] text-muted-foreground hover:text-foreground transition inline-flex items-center gap-1'
+            >
+              Shop all
+              <IconChevronRight
+                size={13}
+                stroke={1.8}
+              />
+            </Link>
+          </div>
+
+          {/* Sub-items chips grid */}
+          <div className='mt-10 grid grid-cols-2 gap-3'>
+            {track.items.slice(0, 4).map((item, i) => (
+              <Link
+                key={item.id}
+                href={item.href}
+                className='group flex items-center gap-3 p-2 pr-4 rounded-2xl border border-hairline hover:border-ink/30 hover:bg-muted/60 transition'
+              >
+                <div className='relative size-14 rounded-xl overflow-hidden bg-secondary shrink-0'>
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    fill
+                    sizes='56px'
+                    className='object-cover group-hover:scale-105 transition-transform duration-500'
+                  />
+                </div>
+                <div className='flex-1 min-w-0'>
+                  <div className='text-[13px] font-medium truncate'>
+                    {item.name}
+                  </div>
+                  <div className='text-[11px] text-muted-foreground'>
+                    {i % 2 === 0 ? '120+ styles' : '80+ styles'}
+                  </div>
+                </div>
+                <IconArrowUpRight
+                  size={14}
+                  stroke={1.6}
+                  className='opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all'
+                />
+              </Link>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </article>
   );
@@ -204,25 +143,19 @@ const CuratedTrackPanel: FC<{ track: CuratedTrack }> = ({ track }) => {
 
 const Curated: FC = () => {
   return (
-    <section
-      id='curated'
-      className='w-full scroll-mt-24'
-    >
-      <div className='flex flex-col gap-2 px-4 md:px-6 py-6 md:py-12'>
-        <h2 className='text-3xl font-black tracking-tighter uppercase md:text-5xl'>
-          Her Picks & His Essentials
-        </h2>
-        <p className='text-xs font-black uppercase tracking-wider text-muted-foreground/80 md:text-xs'>
-          A cleaner, faster way to shop the most-loved edits.
-        </p>
-      </div>
+    <section className='relative bg-background'>
+      <div className='max-w-360 mx-auto px-5 md:px-10'>
+        <div className='text-center max-w-2xl mx-auto py-14 md:py-20'>
+          <div className='text-[11px] tracking-micro uppercase text-muted-foreground mb-4'>
+            The editorial
+          </div>
+          <h2 className='font-display text-5xl md:text-7xl leading-[0.92] tracking-display text-ink'>
+            Curated, <span className='italic'>not catalogued.</span>
+          </h2>
+        </div>
 
-      <div className='mt-4 flex flex-col gap-6 md:gap-8'>
-        {CURATED_TRACKS.map((track) => (
-          <CuratedTrackPanel
-            key={track.id}
-            track={track}
-          />
+        {CURATED_TRACKS.map((track, i) => (
+          <CuratedFeature key={track.id} track={track} index={i} />
         ))}
       </div>
     </section>

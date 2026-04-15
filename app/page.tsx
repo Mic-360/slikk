@@ -6,21 +6,20 @@ import Collections from '@/components/collections';
 import Curated from '@/components/curated';
 import FestiveColumn from '@/components/festive-column';
 import Gifts from '@/components/gifts';
+
 const Home = () => {
   return (
-    <main
-      id='home-top'
-      className='min-h-screen mt-22'
-    >
+    <main id='home-top' className='min-h-screen'>
       <Banner />
-      <Catalogue />
-      <FestiveColumn />
       <AdsColumn />
+      <Catalogue />
       <Categories />
       <Curated />
+      <FestiveColumn />
       <Collections />
       <Gifts />
     </main>
   );
 };
+
 export default Home;

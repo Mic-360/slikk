@@ -2,162 +2,140 @@
 
 import { COLLECTIONS } from '@/lib/const';
 import { cn } from '@/lib/utils';
+import { IconArrowUpRight } from '@tabler/icons-react';
 import { motion } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useRef, useState, type FC } from 'react';
+import type { FC } from 'react';
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 const Collections: FC = () => {
-  const [activeCollection, setActiveCollection] = useState(0);
-  const panelsRef = useRef<Array<HTMLElement | null>>([]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-        if (!visible) return;
-        const index = Number(visible.target.getAttribute('data-index'));
-        if (Number.isNaN(index)) return;
-        setActiveCollection(index);
-      },
-      {
-        threshold: [0.3, 0.45, 0.6, 0.8],
-        rootMargin: '-8% 0px -12% 0px',
-      },
-    );
-
-    panelsRef.current.forEach((panel, index) => {
-      if (!panel) return;
-      panel.setAttribute('data-index', `${index}`);
-      observer.observe(panel);
-    });
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
   return (
     <section
       id='collections'
-      className='relative isolate overflow-hidden py-6 md:py-12'
+      className='relative bg-background py-16 md:py-28'
     >
-      <div className='flex items-end justify-between gap-4 px-4 md:px-6 pb-6'>
-        <div className='flex flex-col'>
-          <motion.h3
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className='text-3xl md:text-5xl font-black tracking-tighter uppercase'
-          >
-            Collections
-          </motion.h3>
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className='text-[11px] md:text-xs text-muted-foreground font-black uppercase tracking-wider opacity-60'
-          >
-            Explore our curated selection of exclusive collections, featuring
-          </motion.p>
-        </div>
-      </div>
-      <div className='relative flex flex-col bg-neutral-900'>
-        {COLLECTIONS.map((collection, collectionIndex) => (
-          <article
-            key={collection.id}
-            id={`collection-${collection.id}`}
-            ref={(element) => {
-              panelsRef.current[collectionIndex] = element;
-            }}
-            className='relative min-h-96 sm:min-h-162.5 overflow-hidden border-b border-white/10 scroll-mt-24'
-          >
-            <div className='absolute inset-0'>
-              <Image
-                src={collection.heroImage}
-                alt={collection.heroAlt}
-                fill
-                className='object-center'
-                sizes='100vw'
-                priority={collectionIndex === 0}
-              />
-              <div className='absolute inset-0 bg-linear-to-b from-black/10 via-black/20 to-black/50' />
-              <div
-                className={cn(
-                  'absolute inset-x-0 -top-24 bg-linear-to-b blur-2xl',
-                  collection.accentGradientClass,
-                )}
-              />
+      <div className='max-w-360 mx-auto px-5 md:px-10'>
+        <div className='flex flex-wrap items-end justify-between gap-6 mb-10 md:mb-14'>
+          <div className='max-w-2xl'>
+            <div className='text-[11px] tracking-micro uppercase text-muted-foreground mb-4'>
+              Collections
             </div>
+            <h2 className='font-display text-5xl md:text-7xl leading-[0.92] tracking-display text-ink'>
+              Live edits. <br />
+              <span className='italic'>Updated daily.</span>
+            </h2>
+          </div>
+          <p className='text-[14.5px] text-muted-foreground max-w-xs leading-relaxed'>
+            Six rotating collections — from travel trolleys to after-hour
+            fragrances. Fresh picks every morning.
+          </p>
+        </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 70 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.45 }}
-              transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-              className='absolute inset-x-0 bottom-0 flex flex-col justify-end px-4 md:px-8 md:py-6 lg:px-12'
-            >
-              <div className='w-full max-w-full overflow-x-auto overflow-y-hidden no-scrollbar'>
-                <div
-                  className={cn(
-                    'flex w-max min-w-full items-end gap-3 pb-4 pr-2 md:gap-4 md:pb-5 md:h-80 xl:h-96',
-                    collectionIndex % 2 === 0 ? 'justify-end' : 'justify-start',
-                  )}
-                >
-                  {collection.products.map((product, productIndex) => {
-                    const baseTilt = ((productIndex % 3) - 1) * 2.25;
-                    const floatingOffset = productIndex % 2 === 0 ? 0 : 12;
+        <div className='space-y-6 md:space-y-8'>
+          {COLLECTIONS.slice(0, 4).map((collection, index) => {
+            const isReversed = index % 2 === 1;
+            const anchor = `collection-${collection.id}`;
+            return (
+              <motion.article
+                id={anchor}
+                key={collection.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.8, ease: EASE }}
+                className='relative overflow-hidden rounded-[28px] md:rounded-[36px] bg-card border border-hairline scroll-mt-28'
+              >
+                <div className='grid md:grid-cols-12 gap-0'>
+                  {/* Hero image */}
+                  <div
+                    className={cn(
+                      'relative md:col-span-6 lg:col-span-7 aspect-4/3 md:aspect-auto min-h-80',
+                      isReversed && 'md:order-2',
+                    )}
+                  >
+                    <Image
+                      src={collection.heroImage}
+                      alt={collection.heroAlt}
+                      fill
+                      sizes='(min-width: 768px) 58vw, 100vw'
+                      className='object-cover'
+                    />
+                    <div
+                      aria-hidden
+                      className={cn(
+                        'absolute inset-0 bg-linear-to-t',
+                        collection.accentGradientClass,
+                      )}
+                    />
+                    <div className='absolute top-5 left-5 flex items-center gap-2'>
+                      <span className='h-7 px-3 rounded-full glass border border-white/30 text-[10.5px] tracking-micro uppercase inline-flex items-center text-ink'>
+                        Edit {String(index + 1).padStart(2, '0')}
+                      </span>
+                    </div>
+                  </div>
 
-                    return (
-                      <motion.div
-                        key={product.id}
-                        initial={{ opacity: 0, y: 24 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{
-                          duration: 0.45,
-                          delay: productIndex * 0.05,
-                          ease: [0.22, 1, 0.36, 1],
-                        }}
-                        whileHover={{
-                          y: -10,
-                          rotate: 0,
-                          scale: 1.02,
-                          transition: { duration: 0.25 },
-                        }}
-                        style={{
-                          rotate: baseTilt,
-                          marginBottom: floatingOffset,
-                        }}
-                        className='shrink-0'
-                      >
-                        <Link
-                          href={product.href}
-                          className='group/product block w-36 md:w-48 lg:w-60'
-                        >
-                          <div className='relative aspect-4/5 overflow-hidden rounded-2xl border border-white/25 bg-black/30'>
+                  {/* Content column */}
+                  <div
+                    className={cn(
+                      'md:col-span-6 lg:col-span-5 p-8 md:p-10 lg:p-14 flex flex-col justify-between min-h-85',
+                      isReversed && 'md:order-1',
+                    )}
+                  >
+                    <div>
+                      <div className='text-[11px] tracking-micro uppercase text-muted-foreground mb-4'>
+                        Collection · {collection.name}
+                      </div>
+                      <h3 className='font-display text-4xl md:text-5xl lg:text-6xl leading-[0.95] tracking-display text-ink'>
+                        {collection.name}
+                      </h3>
+                      <p className='mt-5 text-[15px] leading-[1.55] text-muted-foreground max-w-sm'>
+                        {collection.tagline}
+                      </p>
+                    </div>
+
+                    <div className='mt-8'>
+                      <div className='grid grid-cols-4 gap-2 mb-6'>
+                        {collection.products.slice(0, 4).map((p) => (
+                          <Link
+                            key={p.id}
+                            href={p.href}
+                            className='group relative aspect-square rounded-2xl overflow-hidden bg-secondary'
+                          >
                             <Image
-                              src={product.image}
-                              alt={product.name}
+                              src={p.image}
+                              alt={p.name}
                               fill
-                              className='object-center transition-transform duration-500 ease-out group-hover/product:scale-110'
-                              sizes='(max-width: 768px) 144px, (max-width: 1200px) 176px, 192px'
+                              sizes='80px'
+                              className='object-cover group-hover:scale-110 transition-transform duration-700'
                             />
-                            <div className='absolute inset-0 bg-linear-to-t from-black/45 via-transparent to-transparent' />
-                          </div>
-                        </Link>
-                      </motion.div>
-                    );
-                  })}
+                            <div className='absolute inset-x-0 bottom-0 p-2 bg-linear-to-t from-ink/70 to-transparent opacity-0 group-hover:opacity-100 transition'>
+                              <div className='text-[9.5px] text-ivory truncate tracking-micro uppercase'>
+                                {p.name}
+                              </div>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                      <Link
+                        href={collection.products[0]?.href ?? '#'}
+                        className='h-11 px-5 rounded-full bg-ink text-ivory inline-flex items-center gap-2 text-[13.5px] font-medium hover:bg-ink/90 transition group w-fit'
+                      >
+                        Shop the collection
+                        <IconArrowUpRight
+                          size={14}
+                          stroke={1.8}
+                          className='transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
+                        />
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          </article>
-        ))}
+              </motion.article>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

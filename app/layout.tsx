@@ -1,25 +1,33 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono, Noto_Sans } from "next/font/google";
-import "./globals.css";
-import { cn } from "@/lib/utils";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
+import type { Metadata } from 'next';
+import { Inter_Tight, JetBrains_Mono, Instrument_Serif } from 'next/font/google';
+import './globals.css';
+import { cn } from '@/lib/utils';
+import Header from '@/components/header';
+import Footer from '@/components/footer';
 
-const notoSans = Noto_Sans({ subsets: ["latin"], variable: "--font-sans" });
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const sans = Inter_Tight({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const mono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
+});
+
+const display = Instrument_Serif({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-display',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: "Slikk | Get your slikk delivered in under 60mins",
-  description: "Slikk is a fashion brand that aims to deliver value within seconds and drip within minutes",
+  title: 'Slikk | Fashion delivered in 60 minutes',
+  description:
+    'India’s quickest fashion delivery. Curated labels, premium pieces, at your door within the hour.',
 };
 
 export default function RootLayout({
@@ -31,15 +39,14 @@ export default function RootLayout({
     <html
       lang='en'
       className={cn(
-        'h-full no-scrollbar',
-        'antialiased',
-        geistSans.variable,
-        geistMono.variable,
-        'font-sans',
-        notoSans.variable,
+        'h-full no-scrollbar antialiased font-sans',
+        sans.variable,
+        mono.variable,
+        display.variable,
       )}
+      suppressHydrationWarning
     >
-      <body className='min-h-full flex flex-col'>
+      <body className='min-h-full flex flex-col bg-background text-foreground'>
         <Header />
         {children}
         <Footer />

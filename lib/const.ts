@@ -162,7 +162,7 @@ export const CURATED_TRACKS: CuratedTrack[] = [
 		subtitle:
 			'Everything from elevated everyday fits to statement accessories.',
 		heroImage:
-			'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/product/5e6167e8f23349f6840c20a1af1960d6_style_for_her_web.webp',
+			'/her.png',
 		heroAlt: 'Curated women fashion banner',
 		ctaHref: '/products?banner_id=3931&namex=Tops',
 		items: [
@@ -230,7 +230,7 @@ export const CURATED_TRACKS: CuratedTrack[] = [
 		title: 'The Curated — His Edit',
 		subtitle: 'Clean staples, occasion picks, and travel-ready essentials.',
 		heroImage:
-			'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/product/724525ccf67d40ecbbb9ca41fb5c82a2_the_curated_for_him_web.webp',
+			'/him.png',
 		heroAlt: 'Curated men fashion banner',
 		ctaHref: 'https://www.slikk.club/products?banner_id=3924&namex=Shirts',
 		items: [
@@ -318,7 +318,7 @@ export const COLLECTIONS: CollectionTrack[] = [
 		name: 'Bags',
 		tagline: 'Carry-everywhere styles with everyday swagger.',
 		heroImage:
-			'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/product/225d5efb82204560aaa75b2563de157b_bags_web.webp',
+			'/bags.png',
 		heroAlt: 'Bags collection hero',
 		accentGradientClass: 'from-indigo-400/45 via-sky-300/20 to-transparent',
 		badgeClass:
@@ -373,7 +373,7 @@ export const COLLECTIONS: CollectionTrack[] = [
 		name: 'Jewellery',
 		tagline: 'Tiny sparkles, major main-character moments.',
 		heroImage:
-			'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/product/7b3889f8e33e49158a02ee68859636e2_Jewellery%20web.png',
+			'/jewellry.png',
 		heroAlt: 'Jewellery collection hero',
 		accentGradientClass: 'from-fuchsia-400/45 via-pink-300/20 to-transparent',
 		badgeClass:
@@ -428,7 +428,7 @@ export const COLLECTIONS: CollectionTrack[] = [
 		name: 'Home',
 		tagline: 'Mood-setting corners for every room in your story.',
 		heroImage:
-			'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/product/d861b69c3bac449b892b2ff60ba5e738_Home%20Web.png',
+			'/home.png',
 		heroAlt: 'Home collection hero',
 		accentGradientClass: 'from-emerald-400/45 via-lime-300/20 to-transparent',
 		badgeClass:
@@ -504,7 +504,7 @@ export const COLLECTIONS: CollectionTrack[] = [
 		name: 'Beauty',
 		tagline: 'Glow kits, glam picks, and mirror-ready finishes.',
 		heroImage:
-			'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/product/97e71aaf69a54c09983b99ac1bccb8f3_glam_up_web.webp',
+			'/beauty.png',
 		heroAlt: 'Beauty collection hero',
 		accentGradientClass: 'from-rose-400/45 via-orange-300/20 to-transparent',
 		badgeClass:

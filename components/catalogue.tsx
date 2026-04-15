@@ -1,160 +1,134 @@
 'use client';
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-  type CarouselApi,
-} from '@/components/ui/carousel';
+import { CATALOGUE_ITEMS } from '@/lib/const';
 import { cn } from '@/lib/utils';
-import Autoplay from 'embla-carousel-autoplay';
+import { IconArrowRight, IconArrowUpRight } from '@tabler/icons-react';
 import { motion } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState, type FC } from 'react';
-import { CATALOGUE_ITEMS } from '@/lib/const';
+import { type FC, useRef } from 'react';
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 const Catalogue: FC = () => {
-  const [api, setApi] = useState<CarouselApi>();
-  const [current, setCurrent] = useState(0);
+  const scrollerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!api) return;
-
-    setCurrent(api.selectedScrollSnap());
-
-    api.on('select', () => {
-      setCurrent(api.selectedScrollSnap());
-    });
-  }, [api]);
+  const scrollBy = (dir: 1 | -1) => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: 'smooth' });
+  };
 
   return (
-    <section className='w-full py-8 bg-background'>
-      <div className='mx-auto px-4 md:px-6'>
-        <Carousel
-          setApi={setApi}
-          plugins={[
-            Autoplay({
-              delay: 3000,
-              stopOnInteraction: false,
-              stopOnMouseEnter: true,
-            }),
-          ]}
-          opts={{
-            align: 'start',
-            loop: true,
-          }}
-          className='w-full'
-        >
-          <div className='flex items-end justify-between mb-8 md:mb-12'>
-            <div className='flex flex-col gap-2'>
-              <motion.h3
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className='text-xs font-black tracking-[0.3em] uppercase text-primary'
-              >
-                Curated Collections
-              </motion.h3>
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-                className='text-3xl md:text-5xl font-black tracking-tighter'
-              >
-                The Catalogue
-              </motion.h2>
+    <section className='relative py-16 md:py-28'>
+      <div className='max-w-360 mx-auto px-5 md:px-10 mb-10 md:mb-14'>
+        <div className='flex items-end justify-between gap-6'>
+          <div className='max-w-xl'>
+            <div className='text-[11px] tracking-micro uppercase text-muted-foreground mb-4'>
+              The roster
             </div>
-
-            <div className='hidden md:flex gap-3'>
-              <CarouselPrevious className='static translate-y-0 size-12 rounded-2xl bg-black text-white hover:bg-black/90 hover:text-white border-0 transition-all hover:scale-105 active:scale-95' />
-              <CarouselNext className='static translate-y-0 size-12 rounded-2xl bg-black text-white hover:bg-black/90 hover:text-white border-0 transition-all hover:scale-105 active:scale-95' />
+            <h2 className='font-display text-5xl md:text-7xl leading-[0.95] tracking-display text-ink'>
+              The labels <br />
+              <span className='italic text-muted-foreground'>we love.</span>
+            </h2>
+          </div>
+          <div className='hidden md:flex items-center gap-3 pb-2'>
+            <Link
+              href='/brands'
+              className='text-[13px] text-foreground hover:text-ink transition inline-flex items-center gap-1.5 group'
+            >
+              All 340 brands
+              <IconArrowUpRight
+                size={14}
+                stroke={1.8}
+                className='transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
+              />
+            </Link>
+            <div className='flex gap-1.5 ml-4'>
+              <button
+                type='button'
+                onClick={() => scrollBy(-1)}
+                aria-label='Previous'
+                className='size-10 rounded-full border border-hairline bg-background hover:bg-muted transition grid place-items-center'
+              >
+                <IconArrowRight
+                  size={16}
+                  stroke={1.6}
+                  className='rotate-180'
+                />
+              </button>
+              <button
+                type='button'
+                onClick={() => scrollBy(1)}
+                aria-label='Next'
+                className='size-10 rounded-full bg-ink text-ivory transition grid place-items-center hover:bg-ink/90'
+              >
+                <IconArrowRight size={16} stroke={1.8} />
+              </button>
             </div>
           </div>
+        </div>
+      </div>
 
-          <CarouselContent className='-ml-4'>
-            {CATALOGUE_ITEMS.map((item, index) => (
-              <CarouselItem
-                key={item.id}
-                className='pl-4 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4'
-              >
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95, y: 30 }}
-                  whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
+      <div
+        ref={scrollerRef}
+        className='no-scrollbar overflow-x-auto snap-x snap-mandatory mask-fade-r'
+      >
+        <div className='flex gap-4 md:gap-5 px-5 md:px-10 pb-4'>
+          {CATALOGUE_ITEMS.map((item, i) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.6, ease: EASE, delay: i * 0.04 }}
+              className='snap-start shrink-0 w-[78vw] sm:w-[52vw] md:w-[40vw] lg:w-[28vw] xl:w-[24rem]'
+            >
+              <Link href={item.link} className='block group'>
+                <div
+                  className={cn(
+                    'relative aspect-4/5 rounded-3xl overflow-hidden transition-all duration-700',
+                    item.color,
+                  )}
                 >
-                  <Link
-                    href={item.link}
-                    className='group block relative overflow-visible'
-                  >
-                    <div
-                      className={cn(
-                        'relative aspect-4/5 rounded-[32px] overflow-hidden transition-all duration-700 ease-[0.22,1,0.36,1]',
-                        'group-hover:rounded-[48px] group-hover:shadow-[0_40px_80px_rgba(0,0,0,0.12)]',
-                        item.color,
-                      )}
-                    >
-                      <div className='absolute top-4 left-8 z-20 flex flex-col gap-1'>
-                        <span className='text-[10px] font-black uppercase tracking-widest text-white/60'>
-                          Featured Brand
-                        </span>
-                        <span className='text-2xl font-black tracking-tighter text-white leading-none uppercase'>
-                          {item.name}
-                        </span>
-                      </div>
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    fill
+                    sizes='(min-width: 1280px) 24rem, 40vw'
+                    className='object-cover transition-transform duration-900 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]'
+                  />
+                  <div className='absolute inset-0 bg-linear-to-t from-ink/40 via-ink/0 to-ink/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500' />
 
-                      <div className='absolute inset-0 h-full w-full'>
-                        <Image
-                          src={item.image}
-                          alt={item.name}
-                          fill
-                          className='object-cover transition-transform duration-1000 ease-[0.22,1,0.36,1] group-hover:scale-110'
-                          sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw'
-                        />
-                        <div className='absolute inset-0 bg-linear-to-b from-black/80 via-black/20 to-transparent' />
-                      </div>
+                  <div className='absolute top-4 left-4 flex items-center gap-2 backdrop-blur-2xl rounded-2xl'>
+                    <span className='h-7 px-2.5 rounded-full glass border border-white/40 text-[10.5px] tracking-micro uppercase inline-flex items-center text-ink'>
+                      #{String(i + 1).padStart(2, '0')}
+                    </span>
+                  </div>
 
-                      <div className='absolute top-8 right-8 z-20 scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-500'>
-                        <div className='size-12 rounded-full bg-white text-black flex items-center justify-center shadow-2xl'>
-                          <svg
-                            width='20'
-                            height='20'
-                            viewBox='0 0 24 24'
-                            fill='none'
-                            stroke='currentColor'
-                            strokeWidth='3'
-                            strokeLinecap='round'
-                            strokeLinejoin='round'
-                          >
-                            <path d='M5 12h14m-7-7 7 7-7 7' />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                </motion.div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-
-        <div className='flex justify-center md:justify-start gap-2 mt-10 px-2'>
-          {CATALOGUE_ITEMS.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => api?.scrollTo(i)}
-              className={cn(
-                'h-1.5 rounded-full transition-all duration-500',
-                current === i
-                  ? 'w-10 bg-primary'
-                  : 'w-2 bg-black/10 hover:bg-black/20',
-              )}
-              aria-label={`Go to slide ${i + 1}`}
-            />
+                  <div className='absolute top-4 right-4 size-9 rounded-full bg-background/80 backdrop-blur-md grid place-items-center opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500'>
+                    <IconArrowUpRight size={14} stroke={1.8} />
+                  </div>
+                </div>
+                <div className='mt-5 flex items-start justify-between gap-3'>
+                  <div>
+                    <h3 className='text-[15px] font-medium tracking-[-0.01em]'>
+                      {item.name}
+                    </h3>
+                    <p className='text-[12.5px] text-muted-foreground mt-0.5'>
+                      {i % 3 === 0
+                        ? 'Travel · Luggage'
+                        : i % 3 === 1
+                        ? 'Everyday essentials'
+                        : 'Festive · Occasion'}
+                    </p>
+                  </div>
+                  <span className='text-[11px] tracking-micro uppercase text-muted-foreground shrink-0 pt-1'>
+                    {12 + i * 3} pieces
+                  </span>
+                </div>
+              </Link>
+            </motion.div>
           ))}
         </div>
       </div>

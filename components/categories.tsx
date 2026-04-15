@@ -1,208 +1,173 @@
 'use client';
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel';
-import Autoplay from 'embla-carousel-autoplay';
+import { cn } from '@/lib/utils';
+import { IconArrowUpRight } from '@tabler/icons-react';
 import { motion } from 'motion/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { FC } from 'react';
-import ColumnLayout from './columns';
 
-const CATEGORIES = [
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+type Tile = {
+  name: string;
+  href: string;
+  image: string;
+  kicker: string;
+  count: string;
+  tint: string;
+  area: string; // tailwind grid classes
+  textColor?: string;
+};
+
+const TILES: Tile[] = [
   {
-    id: 1,
     name: 'Dresses',
+    href: '/products?banner_id=2480&namex=Dresses',
     image:
       'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/product/d2f6ccec6baf40f28cb38c796c3f75b8_dresses_5x.webp',
-    link: '/products?banner_id=2480&namex=Dresses',
+    kicker: 'Edit 01',
+    count: '480 styles',
+    tint: 'bg-[#f5e9da]',
+    area: 'md:col-span-6 md:row-span-2 aspect-[4/5] md:aspect-auto',
   },
   {
-    id: 2,
-    name: "Men's Topwear",
+    name: 'Men’s Topwear',
+    href: '/products?banner_id=2478&namex=Mens%20Topwear',
     image:
       'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/product/e69fc4d6e9b74fc9a97bf9c6bdaa383a_mens_top_wear_5x.webp',
-    link: '/products?banner_id=2478&namex=Mens Topwear',
+    kicker: 'Edit 02',
+    count: '312 styles',
+    tint: 'bg-[#eceae4]',
+    area: 'md:col-span-3 aspect-square',
   },
   {
-    id: 3,
-    name: "Women's Ethnic Wear",
+    name: 'Ethnic',
+    href: '/products?banner_id=2480&namex=Ethnic',
     image:
       'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/product/f2767566a574413c888f00ee19b0fdaa_women_ethnic_wear_5x.webp',
-    link: '/products?banner_id=2480&namex=Ethnic',
+    kicker: 'Edit 03',
+    count: '210 styles',
+    tint: 'bg-[#efe3d4]',
+    area: 'md:col-span-3 aspect-square',
   },
   {
-    id: 4,
-    name: "Men's Ethnic Wear",
-    image:
-      'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/product/f6a4ea55d6554928bc50aa9373bc5136_men_ethnic_wear_5x.webp',
-    link: '/products?banner_id=2480&namex=Ethnic',
-  },
-  {
-    id: 5,
-    name: 'Bottom Wear',
-    image:
-      'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/product/44a47ff83c774dc9923146d25deda8c3_bottom_wear_5x.webp',
-    link: '/products?banner_id=2470&namex=Bottom Wear',
-  },
-  {
-    id: 6,
-    name: "Women's Topwear",
-    image:
-      'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/other/784488b871e34e8499bd14d2d9cf589d_women top wear.webp',
-    link: '/products?banner_id=5098&namex=Womens Topwear',
-  },
-  {
-    id: 7,
-    name: 'Handbags',
-    image:
-      'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/product/a1aa0005b45c412ab8154779d869c3e5_handbags_5x.webp',
-    link: '/products?banner_id=2475&namex=Handbags',
-  },
-  {
-    id: 8,
-    name: 'Beauty',
-    image:
-      'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/product/e1fe7108282f408995967ff8ec31c631_beauty_5x.webp',
-    link: '/home?sub_page=Beauty',
-  },
-  {
-    id: 9,
     name: 'Footwear',
-    image:
-      'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/product/c5653b65830544e9ac8cc932b89d806f_footwear_5x.webp',
-    link: '/home?sub_page=Footwear',
+    href: '/products?category=footwear',
+    image: '/header/footwear.png',
+    kicker: 'Edit 04',
+    count: '156 styles',
+    tint: 'bg-ink text-ivory',
+    textColor: 'text-ivory',
+    area: 'md:col-span-3 aspect-square',
   },
   {
-    id: 10,
     name: 'Jewellery',
-    image:
-      'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/product/e567f0e71d6148108435cc1d2c5f4005_Jewellerys.png',
-    link: '/home?sub_page=Jewellery',
+    href: '/products?category=jewellery',
+    image: '/header/jewellery.webp',
+    kicker: 'Edit 05',
+    count: '94 pieces',
+    tint: 'bg-[#e6e0d4]',
+    area: 'md:col-span-3 aspect-square',
   },
   {
-    id: 11,
-    name: 'Trolleys & Backpacks',
-    image:
-      'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/product/fd4267cb88a7427e850f55069cec05f4_travel_5x.webp',
-    link: '/products?banner_id=2477&namex=Trolleys Backpacks',
-  },
-  {
-    id: 12,
-    name: 'Home Decor',
-    image:
-      'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/product/8774d51883ae44c18abe0ac5f4b3fc8a_Home Decor.png',
-    link: '/home?sub_page=Home',
+    name: 'Beauty',
+    href: '/products?category=beauty',
+    image: '/header/beauty.png',
+    kicker: 'Edit 06',
+    count: '228 products',
+    tint: 'bg-[#f2ecd9]',
+    area: 'md:col-span-6 aspect-[16/9]',
   },
 ];
 
-const CategoryCard: FC<{
-  id: number;
-  name: string;
-  image: string;
-  link: string;
-}> = ({ name, image, link, id }) => {
-  return (
-    <Link href={link}>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: (id % 6) * 0.05 }}
-        whileHover={{ y: -12, scale: 1.03 }}
-        className='group relative rounded-2xl overflow-hidden cursor-pointer'
-      >
-        {/* Image container */}
-        <div className='relative h-72 md:h-96 overflow-hidden'>
-          <Image
-            src={image}
-            alt={name}
-            fill
-            className='object-center group-hover:scale-110 transition-transform duration-500'
-          />
-        </div>
+const TileCard: FC<{ tile: Tile; index: number }> = ({ tile, index }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 24 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: '-60px' }}
+    transition={{ duration: 0.7, ease: EASE, delay: index * 0.05 }}
+    className={cn(
+      'group relative overflow-hidden rounded-[28px] md:rounded-[32px] isolate',
+      tile.tint,
+      tile.area,
+    )}
+  >
+    <Link href={tile.href} className='absolute inset-0 z-30' aria-label={tile.name} />
+    <div className='absolute inset-0'>
+      <Image
+        src={tile.image}
+        alt={tile.name}
+        fill
+        sizes='(min-width: 1024px) 40vw, 100vw'
+        className='object-center transition-transform duration-1200 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]'
+      />
+    </div>
 
-        {/* Shine effect on hover */}
-        <div className='absolute inset-0 overflow-hidden z-15'>
-          <motion.div
-            initial={{ x: '-100%' }}
-            whileHover={{ x: '100%' }}
-            transition={{ duration: 0.5 }}
-            className='absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent'
+    <div
+      aria-hidden
+      className='absolute inset-0 bg-linear-to-t from-black/50 via-black/0 to-transparent'
+    />
+
+    <div
+      className={cn(
+        'relative z-20 h-full flex flex-col justify-between p-6 md:p-8',
+        tile.textColor ?? 'text-ivory',
+      )}
+    >
+      <div className='flex items-start justify-between'>
+        <span className='text-[10.5px] tracking-micro uppercase opacity-80 backdrop-blur-2xl text-black p-2.5 rounded-full'>
+          {tile.kicker}
+        </span>
+        <div className='size-10 rounded-full glass border border-white/30 grid place-items-center translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500'>
+          <IconArrowUpRight
+            size={16}
+            stroke={1.8}
+            className='text-ink'
           />
         </div>
-      </motion.div>
-    </Link>
-  );
-};
+      </div>
+
+      <div>
+        <h3 className='font-display text-4xl md:text-5xl lg:text-6xl leading-[0.92] tracking-display'>
+          {tile.name}
+        </h3>
+        <div className='mt-3 flex items-center gap-2 text-[12px] opacity-90'>
+          <span>{tile.count}</span>
+          <span className='opacity-60'>·</span>
+          <span>from ₹599</span>
+        </div>
+      </div>
+    </div>
+  </motion.div>
+);
 
 const Categories: FC = () => {
   return (
-    <section
-      id='section-categories'
-      className='scroll-mt-24'
-    >
-      <ColumnLayout
-        title='Shop by Category'
-        subtitle='Find exactly what you love'
-        className='px-4 md:px-6'
-      >
-        <div className='w-full'>
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            className='hidden md:grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 md:gap-4'
-          >
-            {CATEGORIES.map((category) => (
-              <CategoryCard
-                key={category.id}
-                {...category}
-              />
-            ))}
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45 }}
-            className='md:hidden relative'
-          >
-            <Carousel
-              plugins={[
-                Autoplay({
-                  delay: 2600,
-                  stopOnInteraction: false,
-                  stopOnMouseEnter: true,
-                }),
-              ]}
-              opts={{
-                align: 'start',
-                loop: true,
-              }}
-              className='w-full'
-            >
-              <CarouselContent className='-ml-3'>
-                {CATEGORIES.map((category) => (
-                  <CarouselItem
-                    key={category.id}
-                    className='pl-3 basis-1/2'
-                  >
-                    <CategoryCard {...category} />
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-
-              <CarouselPrevious className='left-2 top-1/2 -translate-y-1/2 size-8 rounded-full border-border bg-background/90 text-foreground shadow-md' />
-              <CarouselNext className='right-2 top-1/2 -translate-y-1/2 size-8 rounded-full border-border bg-background/90 text-foreground shadow-md' />
-            </Carousel>
-          </motion.div>
+    <section id='categories' className='relative py-16 md:py-28 bg-background scroll-mt-24'>
+      <div className='max-w-360 mx-auto px-5 md:px-10'>
+        <div className='flex flex-wrap items-end justify-between gap-6 mb-10 md:mb-14'>
+          <div className='max-w-2xl'>
+            <div className='text-[11px] tracking-micro uppercase text-muted-foreground mb-4'>
+              Shop by category
+            </div>
+            <h2 className='font-display text-5xl md:text-7xl leading-[0.92] tracking-display text-ink'>
+              Six rooms. <br />
+              <span className='italic'>Infinite looks.</span>
+            </h2>
+          </div>
+          <p className='max-w-sm text-[15px] leading-normal text-muted-foreground'>
+            Everything organised the way you’d shop a flagship store — but it
+            arrives before your coffee gets cold.
+          </p>
         </div>
-      </ColumnLayout>
+
+        <div className='grid grid-cols-1 md:grid-cols-12 md:auto-rows-[240px] lg:auto-rows-[280px] gap-4'>
+          {TILES.map((tile, i) => (
+            <TileCard key={tile.name} tile={tile} index={i} />
+          ))}
+        </div>
+      </div>
     </section>
   );
 };
