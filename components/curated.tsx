@@ -15,8 +15,7 @@ const CuratedFeature: FC<{ track: CuratedTrack; index: number }> = ({
   track,
   index,
 }) => {
-  const anchor =
-    track.id === 'for-her' ? 'curated-for-her' : 'curated-for-him';
+  const anchor = track.id === 'for-her' ? 'curated-for-her' : 'curated-for-him';
   const isReversed = index % 2 === 1;
 
   return (
@@ -47,13 +46,9 @@ const CuratedFeature: FC<{ track: CuratedTrack; index: number }> = ({
             aria-hidden
             className='absolute inset-0 bg-linear-to-t from-ink/30 via-transparent to-transparent'
           />
-          <div className='absolute top-6 left-6 flex items-center gap-2'>
-            <span className='h-7 px-3 rounded-full glass border border-white/40 text-[10.5px] tracking-micro uppercase inline-flex items-center text-ink backdrop-blur-2xl'>
-              {track.badge}
-            </span>
-            <span className='h-7 px-3 rounded-full bg-ink text-ivory text-[10.5px] tracking-micro uppercase inline-flex items-center backdrop-blur-2xl'>
-              Volume {String(index + 1).padStart(2, '0')}
-            </span>
+          <div className='absolute bottom-1/3 left-1/2 -translate-x-1/2 translate-y-1/2 text-center text-ink font-display'>
+            <h3 className='text-8xl'>The Curated</h3>
+            <p className='text-4xl italic text-muted'>Style {track.badge}</p>
           </div>
         </motion.div>
 
@@ -155,7 +150,11 @@ const Curated: FC = () => {
         </div>
 
         {CURATED_TRACKS.map((track, i) => (
-          <CuratedFeature key={track.id} track={track} index={i} />
+          <CuratedFeature
+            key={track.id}
+            track={track}
+            index={i}
+          />
         ))}
       </div>
     </section>

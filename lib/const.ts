@@ -316,7 +316,7 @@ export const COLLECTIONS: CollectionTrack[] = [
 	{
 		id: 'bags',
 		name: 'Bags',
-		tagline: 'Carry-everywhere styles with everyday swagger.',
+		tagline: 'Carry everywhere styles with everyday swagger.',
 		heroImage:
 			'/slikk/bags.png',
 		heroAlt: 'Bags collection hero',
@@ -371,7 +371,7 @@ export const COLLECTIONS: CollectionTrack[] = [
 	{
 		id: 'jewellery',
 		name: 'Jewellery',
-		tagline: 'Tiny sparkles, major main-character moments.',
+		tagline: 'Tiny sparkles, major main character moments.',
 		heroImage:
 			'/slikk/jewellry.png',
 		heroAlt: 'Jewellery collection hero',
@@ -426,7 +426,7 @@ export const COLLECTIONS: CollectionTrack[] = [
 	{
 		id: 'home',
 		name: 'Home',
-		tagline: 'Mood-setting corners for every room in your story.',
+		tagline: 'Mood setting corners for every room in your story.',
 		heroImage:
 			'/slikk/home.png',
 		heroAlt: 'Home collection hero',
@@ -502,7 +502,7 @@ export const COLLECTIONS: CollectionTrack[] = [
 	{
 		id: 'beauty',
 		name: 'Beauty',
-		tagline: 'Glow kits, glam picks, and mirror-ready finishes.',
+		tagline: 'Glow kits, glam picks, and mirror ready finishes.',
 		heroImage:
 			'/slikk/beauty.png',
 		heroAlt: 'Beauty collection hero',

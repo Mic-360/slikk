@@ -195,8 +195,7 @@ const Banner: FC = () => {
               className='mt-8 md:mt-10 text-[17px] md:text-[19px] leading-[1.4] text-black max-w-md mx-auto'
             >
               Curated labels, premium pieces, at your door within the hour. No
-              waiting a week. No tracking a parcel across states. Just style —
-              now.
+              waiting a week. No tracking a parcel across states. Just style now.
             </motion.p>
 
             <motion.div

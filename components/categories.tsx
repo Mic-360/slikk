@@ -164,7 +164,7 @@ const Categories: FC = () => {
             </h2>
           </div>
           <p className='max-w-sm text-[15px] leading-normal text-muted-foreground'>
-            Everything organised the way you’d shop a flagship store — but it
+            Everything organised the way you’d shop a flagship store, but it
             arrives before your coffee gets cold.
           </p>
         </div>

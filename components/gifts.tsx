@@ -83,11 +83,11 @@ const Gifts: FC = () => {
                 Gifting
               </div>
               <h2 className='font-display text-5xl md:text-7xl lg:text-[7rem] leading-[0.92] tracking-display text-ink'>
-                Last-minute <br />
+                Last minute <br />
                 <span className='italic text-saffron'>is our favourite.</span>
               </h2>
               <p className='mt-6 text-[15.5px] md:text-[17px] leading-normal text-muted-foreground max-w-md'>
-                Gift-wrapped in under twenty minutes. A handwritten note if you
+                Gift wrapped in under twenty minutes. A handwritten note if you
                 want one. At their door within the hour.
               </p>
               <div className='mt-8 flex items-center gap-3 flex-wrap'>

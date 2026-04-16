@@ -41,14 +41,14 @@ const FestiveColumn: FC = () => {
             <div className='md:col-span-7 text-white'>
               <div className='inline-flex items-center gap-2 h-7 px-3 rounded-full border border-ivory/20 text-[10.5px] tracking-micro uppercase mb-6'>
                 <span className='size-1.5 rounded-full bg-saffron' />
-                Special edition · Baishakhi × Vishu
+                Special edition
               </div>
               <h2 className='font-display text-5xl md:text-7xl lg:text-[7.5rem] leading-[0.92] tracking-display'>
                 A festive <br />
                 <span className='italic text-saffron'>homecoming.</span>
               </h2>
               <p className='mt-5 md:mt-8 text-[15px] md:text-[17px] leading-normal text-ivory/75 max-w-md'>
-                Handwoven silks, cotton jamdani, gold-hued accessories. Fifty
+                Handwoven silks, cotton jamdani, gold hued accessories. Fifty
                 pieces across nine labels, curated for the season of lights.
               </p>
               <div className='mt-8 flex items-center gap-3 flex-wrap'>

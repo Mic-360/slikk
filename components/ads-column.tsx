@@ -26,7 +26,7 @@ const STEPS = [
   {
     step: '03',
     title: 'At your door',
-    copy: 'A slikk rider brings it to you — scooter, helmet, garment bag intact.',
+    copy: 'A slikk rider brings it to you on scooter, helmet, garment bag intact.',
     time: '00:58',
     icon: IconTruck,
     tint: 'bg-ink text-ivory',
@@ -50,7 +50,7 @@ const AdsColumn: FC = () => {
             </h2>
           </div>
           <div className='text-[13px] text-muted-foreground max-w-xs leading-relaxed'>
-            We built micro-fulfilment hubs in your neighbourhood so your rider
+            We built micro fulfilment hubs in your neighbourhood so your rider
             is, quite literally, around the corner.
           </div>
         </div>
@@ -58,7 +58,7 @@ const AdsColumn: FC = () => {
         <div className='grid md:grid-cols-3 gap-4'>
           {STEPS.map((step, i) => (
             <motion.div
-              key={step.step}
+              key={i}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
@@ -114,9 +114,9 @@ const AdsColumn: FC = () => {
               'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/other/2ad35585ff224786a235eab54290d2ef_soch-1.png',
               'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/other/3eed69d30d5341309719f6a0f51d063b_BaugeBagsy.png',
               'https://slikk-dev-assets-public.s3.ap-south-1.amazonaws.com/other/2ad35585ff224786a235eab54290d2ef_soch-1.png',
-            ].map((src) => (
+            ].map((src, i) => (
               <div
-                key={src}
+                key={i}
                 className='size-9 rounded-full border-2 border-background bg-secondary overflow-hidden'
                 style={{
                   backgroundImage: `url(${src})`,

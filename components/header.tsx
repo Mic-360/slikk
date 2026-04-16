@@ -265,9 +265,18 @@ const Header: FC = () => {
             className='fixed inset-0 z-60 bg-background lg:hidden'
           >
             <div className='h-16 flex items-center justify-between px-5 border-b border-hairline'>
-              <span className='font-display text-2xl tracking-display'>
-                slikk<span className='text-saffron'>.</span>
-              </span>
+              <Link
+                href='/'
+                className='inline-block transition-opacity hover:opacity-80'
+              >
+                <Image
+                  src='/slikk/logo.png'
+                  alt='Slikk logo'
+                  width={100}
+                  height={100}
+                  className='invert'
+                />
+              </Link>
               <button
                 type='button'
                 onClick={() => setMenuOpen(false)}

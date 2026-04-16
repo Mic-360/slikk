@@ -35,8 +35,8 @@ const Footer: FC = () => {
                 <span className='italic text-saffron'>&amp; delivered.</span>
               </h2>
               <p className='mt-5 text-[15px] leading-normal text-ivory/70 max-w-md'>
-                Early access to drops, invite-only previews, and the occasional
-                behind-the-scenes from our studio in Bengaluru.
+                Early access to drops, invite only previews, and the occasional
+                BTS from our studio in Bengaluru.
               </p>
             </div>
             <div className='md:col-span-5'>

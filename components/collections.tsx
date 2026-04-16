@@ -28,7 +28,7 @@ const Collections: FC = () => {
             </h2>
           </div>
           <p className='text-[14.5px] text-muted-foreground max-w-xs leading-relaxed'>
-            Six rotating collections — from travel trolleys to after-hour
+            Six rotating collections from travel trolleys to after hour
             fragrances. Fresh picks every morning.
           </p>
         </div>
