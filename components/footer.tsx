@@ -157,7 +157,7 @@ const Footer: FC = () => {
         <div className='mt-14 pt-8 border-t border-hairline flex flex-col md:flex-row gap-5 items-start md:items-center justify-between'>
           <div className='flex items-center gap-4'>
             <p className='text-[12px] text-muted-foreground'>
-              © 2026 Slikk Commerce Pvt. Ltd. Handmade in India.
+              © 2024 SLIKSYNC TECHNOLOGIES PRIVATE LIMITED All Rights Reserved.
             </p>
           </div>
 
