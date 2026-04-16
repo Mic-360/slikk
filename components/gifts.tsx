@@ -75,13 +75,6 @@ const Gifts: FC = () => {
           />
           <div className='relative grid md:grid-cols-12 gap-8 md:gap-10 items-center'>
             <div className='md:col-span-7'>
-              <div className='inline-flex items-center gap-2 h-8 px-3 rounded-full bg-background/60 border border-hairline text-[11px] tracking-micro uppercase mb-6'>
-                <IconGift
-                  size={13}
-                  stroke={1.8}
-                />
-                Gifting
-              </div>
               <h2 className='font-display text-5xl md:text-7xl lg:text-[7rem] leading-[0.92] tracking-display text-ink'>
                 Last minute <br />
                 <span className='italic text-saffron'>is our favourite.</span>
